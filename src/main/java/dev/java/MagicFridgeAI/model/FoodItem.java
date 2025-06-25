@@ -1,9 +1,7 @@
 package dev.java.MagicFridgeAI.model;
 
 import dev.java.MagicFridgeAI.enums.FoodCategory;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FoodItem {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column
     private Long id;
 
