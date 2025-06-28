@@ -1,5 +1,6 @@
 package dev.java.MagicFridgeAI.controller;
 
+import dev.java.MagicFridgeAI.dto.FoodItemDTO;
 import dev.java.MagicFridgeAI.model.FoodItem;
 import dev.java.MagicFridgeAI.service.FoodItemService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,7 +27,7 @@ public class FoodItemController {
             @ApiResponse(responseCode = "201", description = "Food was successfully registered")
     })
     @PostMapping
-    public ResponseEntity<Void> createFoodItem(@RequestBody FoodItem foodItem){
+    public ResponseEntity<Void> createFoodItem(@RequestBody FoodItemDTO foodItem){
         this.foodService.create(foodItem);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();

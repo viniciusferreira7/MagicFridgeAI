@@ -17,7 +17,7 @@ public class FoodItem {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column
-    private Long id;
+    private String id;
 
     @Column
     private String name;
@@ -34,11 +34,11 @@ public class FoodItem {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
