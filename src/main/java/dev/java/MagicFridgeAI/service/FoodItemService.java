@@ -42,7 +42,7 @@ public class FoodItemService {
 
         existingFoodItem.setName(updatedDTO.getName());
         existingFoodItem.setQuantity(updatedDTO.getQuantity());
-        existingFoodItem.setValidatedAt(updatedDTO.setValidatedAt());
+        existingFoodItem.setValidatedAt(updatedDTO.getValidatedAt());
 
         FoodItem savedItem = this.foodItemRepository.save(existingFoodItem);
         return FoodItemMapper.map(savedItem);
