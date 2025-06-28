@@ -33,7 +33,7 @@ public class FoodItemController {
             @ApiResponse(responseCode = "200", description = "Food was successfully updated"),
             @ApiResponse(responseCode = "404", description = "Food not found")
     })
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<FoodItemDTO> updateFoodItem(@PathVariable String id, @RequestBody FoodItemDTO updatedDTO) {
         FoodItemDTO updatedItem = foodService.updateById(id, updatedDTO);
 
