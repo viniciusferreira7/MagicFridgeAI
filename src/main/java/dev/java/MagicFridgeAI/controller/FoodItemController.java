@@ -2,6 +2,9 @@ package dev.java.MagicFridgeAI.controller;
 
 import dev.java.MagicFridgeAI.model.FoodItem;
 import dev.java.MagicFridgeAI.service.FoodItemService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,10 @@ public class FoodItemController {
         this.foodService = foodService;
     }
 
+    @Operation(summary = "Create register of food")
+    @ApiResponses(value =  {
+            @ApiResponse(responseCode = "201", description = "Food was successfully registered")
+    })
     @PostMapping
     public ResponseEntity<Void> createFoodItem(@RequestBody FoodItem foodItem){
         this.foodService.create(foodItem);
