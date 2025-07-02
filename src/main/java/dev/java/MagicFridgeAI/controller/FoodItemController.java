@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/food")
 public class FoodItemController {
@@ -27,6 +29,34 @@ public class FoodItemController {
         foodItemService.create(foodItem);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
+
+    @Operation(summary = "Get all food items")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "List of food items retrieved successfully")
+    })
+
+    @GetMapping
+    public ResponseEntity<List<FoodItemDTO>> getAllFoodItems() {
+        List<FoodItemDTO> foodItems = foodItemService.getAll();
+        return ResponseEntity.ok(foodItems);
+    }
+
+    @Operation(summary = "Get a food item by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Food item retrieved successfully"),
+            @ApiResponse(responseCode = "404", description = "Food item not found")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<FoodItemDTO> getFoodItemById(@PathVariable Long id) {
+        FoodItemDTO foodItem = foodItemService.getById(id);
+
+        if (foodItem == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        return ResponseEntity.ok(foodItem);
+    }
+
 
     @Operation(summary = "Update a food item by ID")
     @ApiResponses(value = {
