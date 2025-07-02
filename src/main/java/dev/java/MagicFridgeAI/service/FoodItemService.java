@@ -4,10 +4,12 @@ import dev.java.MagicFridgeAI.dto.FoodItemDTO;
 import dev.java.MagicFridgeAI.mapper.FoodItemMapper;
 import dev.java.MagicFridgeAI.model.FoodItem;
 import dev.java.MagicFridgeAI.repository.FoodItemRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class FoodItemService {
     private final FoodItemRepository foodItemRepository;
 

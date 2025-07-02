@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/food")
 public class FoodItemController {
-    private final FoodItemService foodService;
+    private final FoodItemService foodItemService;
 
     public FoodItemController(FoodItemService foodService) {
-        this.foodService = foodService;
+        this.foodItemService = foodService;
     }
 
     @Operation(summary = "Create register of food")
@@ -24,7 +24,7 @@ public class FoodItemController {
     })
     @PostMapping
     public ResponseEntity<Void> createFoodItem(@RequestBody FoodItemDTO foodItem) {
-        foodService.create(foodItem);
+        foodItemService.create(foodItem);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
@@ -35,7 +35,7 @@ public class FoodItemController {
     })
     @PatchMapping("/{id}")
     public ResponseEntity<FoodItemDTO> updateFoodItem(@PathVariable String id, @RequestBody FoodItemDTO updatedDTO) {
-        FoodItemDTO updatedItem = foodService.updateById(id, updatedDTO);
+        FoodItemDTO updatedItem = foodItemService.updateById(id, updatedDTO);
 
         if (updatedItem == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -51,7 +51,7 @@ public class FoodItemController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFoodItem(@PathVariable String id) {
-        boolean deleted = foodService.deleteById(id);
+        boolean deleted = foodItemService.deleteById(id);
 
         if (!deleted) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
