@@ -28,12 +28,12 @@ public class FoodItemService {
         return foodItemList.stream().map(FoodItemMapper::map).toList();
     }
 
-    public FoodItemDTO getById(String id) {
+    public FoodItemDTO getById(Long id) {
         Optional<FoodItem> foodItem = this.foodItemRepository.findById(id);
         return foodItem.map(FoodItemMapper::map).orElse(null);
     }
 
-    public FoodItemDTO updateById(String id, FoodItemDTO updatedDTO) {
+    public FoodItemDTO updateById(Long id, FoodItemDTO updatedDTO) {
         Optional<FoodItem> optionalFoodItem = this.foodItemRepository.findById(id);
 
         if (optionalFoodItem.isEmpty()) {
@@ -50,7 +50,7 @@ public class FoodItemService {
         return FoodItemMapper.map(savedItem);
     }
 
-    public boolean deleteById(String id) {
+    public boolean deleteById(Long id) {
         Optional<FoodItem> optionalFoodItem = this.foodItemRepository.findById(id);
 
         if (optionalFoodItem.isEmpty()) {

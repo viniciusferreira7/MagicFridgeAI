@@ -12,18 +12,18 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FoodItemDTO {
 
-    private String id;
+    private Long id;
     private String name;
     private FoodCategory category;
     private Integer quantity;
     private LocalDateTime validatedAt;
     private LocalDateTime createdAt;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

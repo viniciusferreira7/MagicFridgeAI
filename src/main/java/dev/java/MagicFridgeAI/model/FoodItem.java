@@ -15,9 +15,9 @@ import java.time.LocalDateTime;
 public class FoodItem {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
-    private String id;
+    private Long id;
 
     @Column
     private String name;
@@ -34,11 +34,11 @@ public class FoodItem {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

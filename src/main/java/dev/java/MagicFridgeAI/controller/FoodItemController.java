@@ -34,7 +34,7 @@ public class FoodItemController {
             @ApiResponse(responseCode = "404", description = "Food not found")
     })
     @PatchMapping("/{id}")
-    public ResponseEntity<FoodItemDTO> updateFoodItem(@PathVariable String id, @RequestBody FoodItemDTO updatedDTO) {
+    public ResponseEntity<FoodItemDTO> updateFoodItem(@PathVariable Long id, @RequestBody FoodItemDTO updatedDTO) {
         FoodItemDTO updatedItem = foodItemService.updateById(id, updatedDTO);
 
         if (updatedItem == null) {
@@ -50,7 +50,7 @@ public class FoodItemController {
             @ApiResponse(responseCode = "404", description = "Food not found")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteFoodItem(@PathVariable String id) {
+    public ResponseEntity<Void> deleteFoodItem(@PathVariable Long id) {
         boolean deleted = foodItemService.deleteById(id);
 
         if (!deleted) {
