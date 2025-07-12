@@ -16,6 +16,7 @@ import reactor.util.retry.Retry;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class ChatGptService {
@@ -47,13 +48,23 @@ public class ChatGptService {
                 .map(FoodItemMapper::map)
                 .toList();
 
-        String foodItemsJson = mapToJson(foodItemList);
+        String foodItemsText = foodItemList.stream()
+                .map(item -> String.format(
+                        "- %s (%s), %d units, valid until %s",
+                        item.getName(),
+                        item.getCategory().name(),
+                        item.getQuantity(),
+                        item.getValidatedAt().toLocalDate()
+                ))
+                .collect(Collectors.joining("\n"));
+
+        String prompt = "Based in my database, make a recipe with following items: " + foodItemsText;
 
         Map<String, Object> body = Map.of(
                 "model", "gpt-4o",
                 "messages", new Object[] {
                         Map.of("role", "system", "content", "You are recipe generator"),
-                        Map.of("role", "user", "content", foodItemsJson)
+                        Map.of("role", "user", "content", prompt)
                 }
         );
 
