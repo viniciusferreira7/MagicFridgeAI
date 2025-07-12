@@ -1,6 +1,9 @@
 package dev.java.MagicFridgeAI.service;
 
-import dev.java.MagicFridgeAI.config.WebClientConfig;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.java.MagicFridgeAI.dto.FoodItemDTO;
+import dev.java.MagicFridgeAI.mapper.FoodItemMapper;
 import dev.java.MagicFridgeAI.repository.FoodItemRepository;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -24,12 +27,33 @@ public class ChatGptService {
         this.foodItemRepository = foodItemRepository;
     }
 
-    public Mono<String> generateRecipe(String prompt) {
+    public static String mapToJson(List<FoodItemDTO> foodItemDTOList){
+        ObjectMapper mapper = new ObjectMapper();
+        String foodItemsJson;
+
+        try {
+            foodItemsJson = mapper.writeValueAsString(foodItemDTOList);
+
+            return foodItemsJson;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException("Error to convert aliments`s list to JSON", e);
+        }
+    };
+
+    public Mono<String> generateRecipe() {
+        List<FoodItemDTO> foodItemList = this.foodItemRepository
+                .findAll()
+                .stream()
+                .map(FoodItemMapper::map)
+                .toList();
+
+        String foodItemsJson = mapToJson(foodItemList);
+
         Map<String, Object> body = Map.of(
                 "model", "gpt-4o",
                 "messages", new Object[] {
                         Map.of("role", "system", "content", "You are recipe generator"),
-                        Map.of("role", "user", "content", prompt)
+                        Map.of("role", "user", "content", foodItemsJson)
                 }
         );
 

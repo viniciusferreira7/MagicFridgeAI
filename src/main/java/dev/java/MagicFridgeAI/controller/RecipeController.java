@@ -25,7 +25,10 @@ public class RecipeController {
             @ApiResponse(responseCode = "500", description = "Erro ao gerar receita")
     })
     @GetMapping("/generate")
-    public ResponseEntity<Mono<String>> generateRecipe(){
-        return ResponseEntity.ok(this.chatGptService.generateRecipe("O que é Java?"));
+    public Mono<ResponseEntity<String>> generateRecipe(){
+        return this.chatGptService
+                        .generateRecipe()
+                .map(ResponseEntity::ok)
+                .defaultIfEmpty(ResponseEntity.noContent().build());
     }
 }
