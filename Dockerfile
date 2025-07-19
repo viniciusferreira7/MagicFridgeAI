@@ -1,9 +1,11 @@
-FROM bitnami/java:17-debian-12
+FROM maven:3.9.4-eclipse-temurin-17 AS build
 
-LABEL mainteiner ="john.doe@example.com"
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+FROM eclipse-temurin:17-jdk-alpine
 
-WORKDIR app/
-
-COPY target/MagicFridgeAI-0.0.1-SNAPSHOT.jar /app/magic-fridge-ai.jar
-
-ENTRYPOINT ["java", "-jar", "magic-fridge-ai.jar"]
+WORKDIR /app
+COPY --from=build /app/target/MagicFridgeAI-0.0.1-SNAPSHOT.jar app.jar
+ENTRYPOINT ["java", "-jar", "app.jar"]
