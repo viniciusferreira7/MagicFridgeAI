@@ -6,3 +6,5 @@
 !pom.xml
 # Exclude the target directory and its contents
 target/
+
+.dockerignore
